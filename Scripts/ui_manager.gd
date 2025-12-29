@@ -3,12 +3,14 @@ extends CanvasLayer
 var tool_buttons : Array[ToolButton]
 
 func _ready():
-    # Get the HBoxContainer that contains the tool buttons
-    var hbox_container = $HBoxContainer
-    if hbox_container:
-        for child in hbox_container.get_children():
+    # Get the ToolButtons container that contains the tool buttons
+    var tool_buttons_container = $ToolButtons
+    if tool_buttons_container:
+        for child in tool_buttons_container.get_children():
             if child is ToolButton:
                 tool_buttons.append(child)
+    else:
+        print("Warning: ToolButtons container not found")
 
     # Connect to GameManager if it exists
     if GameManager:
