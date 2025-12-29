@@ -14,6 +14,10 @@ func _input(event):
 func advance_day():
     current_day += 1
     print("Day ", current_day, " has started.")
-    
-    # Notify farm manager of the new day
-    farm_manager._on_new_day(current_day)
+
+    # Notify GameManager of the new day (which will propagate to farm manager)
+    if GameManager:
+        GameManager.NewDay.emit(current_day)
+    else:
+        # Fallback to direct call if GameManager is not available
+        farm_manager._on_new_day(current_day)
