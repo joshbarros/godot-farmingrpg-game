@@ -23,6 +23,9 @@ var tile_atlas_coords : Dictionary[TileType, Vector2i] = {
 }
 
 func _ready():
+    GameManager.NewDay.connect(_on_new_day)
+    GameManager.HarvestCrop.connect(_on_harvest_crop)
+
     for cell in tile_map.get_used_cells():
         tile_info[cell] = TileInfo.new()
 

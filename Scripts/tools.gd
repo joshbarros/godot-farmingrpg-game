@@ -21,7 +21,16 @@ const TILE_SIZE : int = 16
 var highlight : ColorRect
 
 func _ready():
-    current_tool = Tool.HOE
+    # Connect to the GameManager for tool selection
+    var game_manager = get_tree().root.get_node_or_null("GameManager")
+    if game_manager:
+        game_manager.SetPlayerTool.connect(set_tool)
+        # Set the default tool via GameManager
+        game_manager.SetPlayerTool.emit(Tool.HOE, null)
+    else:
+        # Fallback if GameManager is not available
+        current_tool = Tool.HOE
+        print("Warning: GameManager not found, using fallback tool selection")
     _create_highlight()
 
 func _create_highlight():

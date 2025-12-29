@@ -53,4 +53,4 @@ func give_seed(crop_data : CropData, amount : int):
 	else:
 		owned_seeds[crop_data] = amount
 
-    ChangeSeedQuantity.emit(crop_data, owned_seeds[crop_data])
+	ChangeSeedQuantity.emit(crop_data, owned_seeds[crop_data])
