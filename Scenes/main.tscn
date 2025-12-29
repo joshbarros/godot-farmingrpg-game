@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=4 uid="uid://b24su32e5ewmo"]
+[gd_scene load_steps=35 format=4 uid="uid://b24su32e5ewmo"]
 
 [ext_resource type="TileSet" uid="uid://px1dkgbdsckj" path="res://Sprites/Tiles/farm_tileset.tres" id="1_8gbba"]
 [ext_resource type="Script" uid="uid://b4xcnpogd3c2r" path="res://Scripts/player.gd" id="1_bo1nx"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://bysct6qdiaolh" path="res://Sprites/UI/Hoe_Icon.png" id="11_344ge"]
 [ext_resource type="Texture2D" uid="uid://b76a5c1simxjk" path="res://Sprites/UI/WaterBucket_Icon.png" id="12_344ge"]
 [ext_resource type="Texture2D" uid="uid://b64hl0ony4d68" path="res://Sprites/UI/Scythe_Icon.png" id="13_344ge"]
+[ext_resource type="Texture2D" uid="uid://cmbasfuts4u8v" path="res://Sprites/UI/TomatoSeed_Icon.png" id="14_344ge"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jjgbg"]
 radius = 6.0
@@ -223,8 +224,12 @@ script = ExtResource("5_6bp64")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
-offset_right = 657.0
-offset_bottom = 100.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -100.0
+offset_right = 300.0
+offset_bottom = -20.0
 alignment = 1
 
 [node name="HoeButton" type="TextureButton" parent="CanvasLayer/HBoxContainer"]
@@ -402,7 +407,7 @@ offset_right = 30.0
 offset_bottom = 30.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("8_344ge")
+texture = ExtResource("14_344ge")
 
 [node name="QuantityText" type="Label" parent="CanvasLayer/HBoxContainer/TomatoSeedButton"]
 layout_mode = 1
