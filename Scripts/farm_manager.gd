@@ -33,7 +33,15 @@ func _on_new_day(day: int):
     pass
 
 func _on_harvest_crop(crop: Crop):
-    pass
+    # Add harvested crop to player's inventory
+    var game_manager = get_tree().root.get_node_or_null("GameManager")
+    if game_manager and crop and crop.crop_data:
+        # Add harvested crop to inventory (for now, add 1 of the same crop type as seed)
+        if not game_manager.owned_seeds.has(crop.crop_data):
+            game_manager.owned_seeds[crop.crop_data] = 0
+        game_manager.owned_seeds[crop.crop_data] += 1
+        # Emit signal to update UI
+        game_manager.ChangeSeedQuantity.emit(crop.crop_data, game_manager.owned_seeds[crop.crop_data])
 
 func try_till_tile(player_pos: Vector2):
     var local_pos = tile_map.to_local(player_pos)
@@ -71,6 +79,17 @@ func try_seed_tile(player_pos: Vector2, crop_data: CropData):
     if crop_data == null:
         return
 
+    # Check if GameManager exists and if player has enough seeds
+    var game_manager = get_tree().root.get_node_or_null("GameManager")
+    if game_manager:
+        if not game_manager.owned_seeds.has(crop_data) or game_manager.owned_seeds[crop_data] <= 0:
+            print("Not enough seeds to plant: ", crop_data.resource_path)
+            return
+        # Consume one seed
+        game_manager.owned_seeds[crop_data] -= 1
+        # Emit signal to update UI
+        game_manager.ChangeSeedQuantity.emit(crop_data, game_manager.owned_seeds[crop_data])
+
     var crop_instance = crop_scene.instantiate()
     crop_instance.position = tile_map.map_to_local(coords)
     add_child(crop_instance)
@@ -92,7 +111,8 @@ func try_harvest_tile(player_pos: Vector2):
     tile_info[coords].crop = null
 
 func is_tile_watered(pos: Vector2i) -> bool:
-    return false
+    var coords : Vector2i = tile_map.local_to_map(pos)
+    return tile_info[coords].watered
 
 func _set_tile_state(coords : Vector2i, tile_type: TileType):
     tile_map.set_cell(coords, 0, tile_atlas_coords[tile_type])
