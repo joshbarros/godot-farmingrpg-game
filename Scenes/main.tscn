@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://b24su32e5ewmo"]
+
+[ext_resource type="Texture2D" uid="uid://c48eybj4dadl0" path="res://Sprites/Player/Player.png" id="1_jjgbg"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jjgbg"]
+radius = 6.0
+height = 15.0
+
+[node name="Main" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Player" type="CharacterBody2D" parent="."]
+
+[node name="Sprite" type="Sprite2D" parent="Player"]
+texture = ExtResource("1_jjgbg")
+region_enabled = true
+region_rect = Rect2(2, 2, 12, 15)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("CapsuleShape2D_jjgbg")
