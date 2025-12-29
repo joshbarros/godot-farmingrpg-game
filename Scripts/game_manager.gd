@@ -17,13 +17,18 @@ var all_crop_data : Array[CropData] = [
 var owned_seeds : Dictionary[CropData, int]
 
 func _ready():
-	pass
+	for cd in all_crop_data:
+		give_seed.call_deferred(cd, 2)
+	give_money.call_deferred(10)  # Start with some money
 
 func set_next_day():
-	pass
+	day += 1
+	NewDay.emit(day)
 
 func harvest_crop(crop : Crop):
-	pass
+	give_money(crop.crop_data.sell_price)
+	HarvestCrop.emit(crop)
+	crop.queue_free()
 
 func try_buy_seed(crop_data: CropData):
 	if money < crop_data.seed_price:
@@ -41,3 +46,11 @@ func consume_seed(crop_data : CropData):
 func give_money(amount : int):
 	money += amount
 	ChangeMoney.emit(money)
+
+func give_seed(crop_data : CropData, amount : int):
+	if owned_seeds.has(crop_data):
+		owned_seeds[crop_data] += amount
+	else:
+		owned_seeds[crop_data] = amount
+
+    ChangeSeedQuantity.emit(crop_data, owned_seeds[crop_data])

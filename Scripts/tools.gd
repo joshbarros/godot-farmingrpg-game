@@ -64,14 +64,15 @@ func _update_tool_ui(selected_tool: Tool):
                 Tool.SCYTHE:
                     button_name = "ScytheButton"
                 Tool.SEED:
-                    # For seed tool, we can't determine which seed button, so highlight both
-                    var corn_button = hbox_container.get_node_or_null("CornSeedButton")
-                    var tomato_button = hbox_container.get_node_or_null("TomatoSeedButton")
-                    if corn_button:
-                        corn_button.set_selected(true)
-                    if tomato_button:
-                        tomato_button.set_selected(true)
-                    return
+                    # For seed tool, we need to determine which specific seed was selected
+                    # We'll check the current_seed to determine which button to highlight
+                    if current_seed and current_seed.resource_path.find("corn") != -1:
+                        button_name = "CornSeedButton"
+                    elif current_seed and current_seed.resource_path.find("tomato") != -1:
+                        button_name = "TomatoSeedButton"
+                    else:
+                        # If no specific seed is selected, don't highlight any seed button
+                        return
 
             # Highlight the specific tool button
             var button = hbox_container.get_node_or_null(button_name)
