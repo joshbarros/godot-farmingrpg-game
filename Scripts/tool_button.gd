@@ -34,9 +34,8 @@ func _update_visual_state():
 func _on_button_pressed():
     print("Tool button pressed: ", tool)  # Debug print
     # Emit signal to GameManager to change the selected tool
-    var game_manager = get_tree().root.get_node_or_null("GameManager")
-    if game_manager:
-        game_manager.SetPlayerTool.emit(tool, crop_seed)
+    if GameManager:
+        GameManager.SetPlayerTool.emit(tool, crop_seed)
         print("Emitted tool change to GameManager: ", tool)  # Debug print
     else:
         print("GameManager not available, trying direct tool setting")  # Debug print

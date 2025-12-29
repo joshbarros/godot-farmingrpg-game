@@ -34,14 +34,13 @@ func _on_new_day(day: int):
 
 func _on_harvest_crop(crop: Crop):
     # Add harvested crop to player's inventory
-    var game_manager = get_tree().root.get_node_or_null("GameManager")
-    if game_manager and crop and crop.crop_data:
+    if GameManager and crop and crop.crop_data:
         # Add harvested crop to inventory (for now, add 1 of the same crop type as seed)
-        if not game_manager.owned_seeds.has(crop.crop_data):
-            game_manager.owned_seeds[crop.crop_data] = 0
-        game_manager.owned_seeds[crop.crop_data] += 1
+        if not GameManager.owned_seeds.has(crop.crop_data):
+            GameManager.owned_seeds[crop.crop_data] = 0
+        GameManager.owned_seeds[crop.crop_data] += 1
         # Emit signal to update UI
-        game_manager.ChangeSeedQuantity.emit(crop.crop_data, game_manager.owned_seeds[crop.crop_data])
+        GameManager.ChangeSeedQuantity.emit(crop.crop_data, GameManager.owned_seeds[crop.crop_data])
 
 func try_till_tile(player_pos: Vector2):
     var local_pos = tile_map.to_local(player_pos)
@@ -80,15 +79,14 @@ func try_seed_tile(player_pos: Vector2, crop_data: CropData):
         return
 
     # Check if GameManager exists and if player has enough seeds
-    var game_manager = get_tree().root.get_node_or_null("GameManager")
-    if game_manager:
-        if not game_manager.owned_seeds.has(crop_data) or game_manager.owned_seeds[crop_data] <= 0:
+    if GameManager:
+        if not GameManager.owned_seeds.has(crop_data) or GameManager.owned_seeds[crop_data] <= 0:
             print("Not enough seeds to plant: ", crop_data.resource_path)
             return
         # Consume one seed
-        game_manager.owned_seeds[crop_data] -= 1
+        GameManager.owned_seeds[crop_data] -= 1
         # Emit signal to update UI
-        game_manager.ChangeSeedQuantity.emit(crop_data, game_manager.owned_seeds[crop_data])
+        GameManager.ChangeSeedQuantity.emit(crop_data, GameManager.owned_seeds[crop_data])
 
     var crop_instance = crop_scene.instantiate()
     crop_instance.position = tile_map.map_to_local(coords)

@@ -22,11 +22,10 @@ var highlight : ColorRect
 
 func _ready():
     # Connect to the GameManager for tool selection
-    var game_manager = get_tree().root.get_node_or_null("GameManager")
-    if game_manager:
-        game_manager.SetPlayerTool.connect(set_tool)
+    if GameManager:
+        GameManager.SetPlayerTool.connect(set_tool)
         # Set the default tool via GameManager
-        game_manager.SetPlayerTool.emit(Tool.HOE, null)
+        GameManager.SetPlayerTool.emit(Tool.HOE, null)
     else:
         # Fallback if GameManager is not available
         current_tool = Tool.HOE
