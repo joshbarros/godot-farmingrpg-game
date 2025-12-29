@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://b24su32e5ewmo"]
+[gd_scene load_steps=34 format=4 uid="uid://b24su32e5ewmo"]
 
 [ext_resource type="TileSet" uid="uid://px1dkgbdsckj" path="res://Sprites/Tiles/farm_tileset.tres" id="1_8gbba"]
 [ext_resource type="Script" uid="uid://b4xcnpogd3c2r" path="res://Scripts/player.gd" id="1_bo1nx"]
@@ -6,6 +6,14 @@
 [ext_resource type="Script" uid="uid://oyn5s53x4mlu" path="res://Scripts/farm_manager.gd" id="1_kry3j"]
 [ext_resource type="Script" uid="uid://dbafmag5j7o46" path="res://Scripts/tools.gd" id="5_6bp64"]
 [ext_resource type="PackedScene" uid="uid://ccc278xtwb7im" path="res://Scenes/crop.tscn" id="5_21xkr"]
+[ext_resource type="Texture2D" uid="uid://c52mn8i1wh6e1" path="res://Sprites/UI/ItemBox.png" id="7_6bp64"]
+[ext_resource type="Texture2D" uid="uid://bht57gdi4744e" path="res://Sprites/UI/CornSeed_Icon.png" id="8_344ge"]
+[ext_resource type="Script" uid="uid://bhyhth6xhqn2h" path="res://Scripts/tool_button.gd" id="8_ynf5e"]
+[ext_resource type="Resource" uid="uid://dqus8o21xsti5" path="res://Crops/corn.tres" id="9_344ge"]
+[ext_resource type="Resource" uid="uid://4qm74ibw0q1r" path="res://Crops/tomato.tres" id="10_344ge"]
+[ext_resource type="Texture2D" uid="uid://bysct6qdiaolh" path="res://Sprites/UI/Hoe_Icon.png" id="11_344ge"]
+[ext_resource type="Texture2D" uid="uid://b76a5c1simxjk" path="res://Sprites/UI/WaterBucket_Icon.png" id="12_344ge"]
+[ext_resource type="Texture2D" uid="uid://b64hl0ony4d68" path="res://Sprites/UI/Scythe_Icon.png" id="13_344ge"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jjgbg"]
 radius = 6.0
@@ -178,6 +186,11 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="LabelSettings" id="LabelSettings_344ge"]
+font_size = 28
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 1)
+
 [node name="Main" type="Node2D"]
 
 [node name="FarmManager" type="Node" parent="."]
@@ -206,3 +219,203 @@ animation = &"walk_down"
 script = ExtResource("5_6bp64")
 
 [node name="Crop" parent="." instance=ExtResource("5_21xkr")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+offset_right = 657.0
+offset_bottom = 100.0
+alignment = 1
+
+[node name="HoeButton" type="TextureButton" parent="CanvasLayer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture_normal = ExtResource("7_6bp64")
+stretch_mode = 4
+script = ExtResource("8_ynf5e")
+
+[node name="Icon" type="TextureRect" parent="CanvasLayer/HBoxContainer/HoeButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_344ge")
+
+[node name="QuantityText" type="Label" parent="CanvasLayer/HBoxContainer/HoeButton"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+label_settings = SubResource("LabelSettings_344ge")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="WaterButton" type="TextureButton" parent="CanvasLayer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture_normal = ExtResource("7_6bp64")
+stretch_mode = 4
+script = ExtResource("8_ynf5e")
+tool = 1
+
+[node name="Icon" type="TextureRect" parent="CanvasLayer/HBoxContainer/WaterButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_344ge")
+
+[node name="QuantityText" type="Label" parent="CanvasLayer/HBoxContainer/WaterButton"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+label_settings = SubResource("LabelSettings_344ge")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="ScytheButton" type="TextureButton" parent="CanvasLayer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture_normal = ExtResource("7_6bp64")
+stretch_mode = 4
+script = ExtResource("8_ynf5e")
+tool = 2
+
+[node name="Icon" type="TextureRect" parent="CanvasLayer/HBoxContainer/ScytheButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_344ge")
+
+[node name="QuantityText" type="Label" parent="CanvasLayer/HBoxContainer/ScytheButton"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+label_settings = SubResource("LabelSettings_344ge")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="CornSeedButton" type="TextureButton" parent="CanvasLayer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture_normal = ExtResource("7_6bp64")
+stretch_mode = 4
+script = ExtResource("8_ynf5e")
+tool = 3
+crop_seed = ExtResource("9_344ge")
+
+[node name="Icon" type="TextureRect" parent="CanvasLayer/HBoxContainer/CornSeedButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_344ge")
+
+[node name="QuantityText" type="Label" parent="CanvasLayer/HBoxContainer/CornSeedButton"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "50"
+label_settings = SubResource("LabelSettings_344ge")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="TomatoSeedButton" type="TextureButton" parent="CanvasLayer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture_normal = ExtResource("7_6bp64")
+stretch_mode = 4
+script = ExtResource("8_ynf5e")
+tool = 3
+crop_seed = ExtResource("10_344ge")
+
+[node name="Icon" type="TextureRect" parent="CanvasLayer/HBoxContainer/TomatoSeedButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_344ge")
+
+[node name="QuantityText" type="Label" parent="CanvasLayer/HBoxContainer/TomatoSeedButton"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "50"
+label_settings = SubResource("LabelSettings_344ge")
+horizontal_alignment = 1
+vertical_alignment = 2

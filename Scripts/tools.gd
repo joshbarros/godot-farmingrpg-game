@@ -32,6 +32,7 @@ func _create_highlight():
     get_tree().root.call_deferred("add_child", highlight)
 
 func set_tool(tool_type: Tool, crop_seed: CropData = null):
+    print("Setting tool to: ", tool_type, " with seed: ", crop_seed)  # Debug print
     current_tool = tool_type
     current_seed = crop_seed
     _cancel_selection()
