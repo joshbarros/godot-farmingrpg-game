@@ -1,9 +1,10 @@
-[gd_scene load_steps=23 format=4 uid="uid://b24su32e5ewmo"]
+[gd_scene load_steps=24 format=4 uid="uid://b24su32e5ewmo"]
 
 [ext_resource type="TileSet" uid="uid://px1dkgbdsckj" path="res://Sprites/Tiles/farm_tileset.tres" id="1_8gbba"]
 [ext_resource type="Script" uid="uid://b4xcnpogd3c2r" path="res://Scripts/player.gd" id="1_bo1nx"]
 [ext_resource type="Texture2D" uid="uid://c48eybj4dadl0" path="res://Sprites/Player/Player.png" id="1_jjgbg"]
-[ext_resource type="Script" uid="uid://0v4wrmir0xoj" path="res://Scripts/crop.gd" id="4_jjvhh"]
+[ext_resource type="Script" uid="uid://oyn5s53x4mlu" path="res://Scripts/farm_manager.gd" id="1_kry3j"]
+[ext_resource type="PackedScene" uid="uid://ccc278xtwb7im" path="res://Scenes/crop.tscn" id="5_21xkr"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jjgbg"]
 radius = 6.0
@@ -179,6 +180,7 @@ animations = [{
 [node name="Main" type="Node2D"]
 
 [node name="FarmManager" type="Node" parent="."]
+script = ExtResource("1_kry3j")
 
 [node name="FarmTileMap" type="TileMapLayer" parent="FarmManager"]
 z_index = -100
@@ -198,7 +200,4 @@ shape = SubResource("CapsuleShape2D_jjgbg")
 sprite_frames = SubResource("SpriteFrames_jjgbg")
 animation = &"walk_down"
 
-[node name="Crop" type="Node2D" parent="."]
-script = ExtResource("4_jjvhh")
-
-[node name="Sprite" type="Sprite2D" parent="Crop"]
+[node name="Crop" parent="." instance=ExtResource("5_21xkr")]
