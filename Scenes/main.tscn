@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=4 uid="uid://b24su32e5ewmo"]
+[gd_scene load_steps=36 format=4 uid="uid://b24su32e5ewmo"]
 
 [ext_resource type="TileSet" uid="uid://px1dkgbdsckj" path="res://Sprites/Tiles/farm_tileset.tres" id="1_8gbba"]
 [ext_resource type="Script" uid="uid://b4xcnpogd3c2r" path="res://Scripts/player.gd" id="1_bo1nx"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://dbafmag5j7o46" path="res://Scripts/tools.gd" id="5_6bp64"]
 [ext_resource type="PackedScene" uid="uid://ccc278xtwb7im" path="res://Scenes/crop.tscn" id="5_21xkr"]
 [ext_resource type="Texture2D" uid="uid://c52mn8i1wh6e1" path="res://Sprites/UI/ItemBox.png" id="7_6bp64"]
+[ext_resource type="Script" uid="uid://b4300x3ckv52a" path="res://Scripts/ui_manager.gd" id="7_k12tt"]
 [ext_resource type="Texture2D" uid="uid://bht57gdi4744e" path="res://Sprites/UI/CornSeed_Icon.png" id="8_344ge"]
 [ext_resource type="Script" uid="uid://bhyhth6xhqn2h" path="res://Scripts/tool_button.gd" id="8_ynf5e"]
 [ext_resource type="Resource" uid="uid://dqus8o21xsti5" path="res://Crops/corn.tres" id="9_344ge"]
@@ -222,8 +223,9 @@ script = ExtResource("5_6bp64")
 [node name="Crop" parent="." instance=ExtResource("5_21xkr")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("7_k12tt")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+[node name="ToolButtons" type="HBoxContainer" parent="CanvasLayer"]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -238,14 +240,14 @@ grow_vertical = 0
 size_flags_vertical = 3
 alignment = 1
 
-[node name="HoeButton" type="TextureButton" parent="CanvasLayer/HBoxContainer"]
+[node name="HoeButton" type="TextureButton" parent="CanvasLayer/ToolButtons"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 texture_normal = ExtResource("7_6bp64")
 stretch_mode = 4
 script = ExtResource("8_ynf5e")
 
-[node name="Icon" type="TextureRect" parent="CanvasLayer/HBoxContainer/HoeButton"]
+[node name="Icon" type="TextureRect" parent="CanvasLayer/ToolButtons/HoeButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -260,7 +262,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("11_344ge")
 
-[node name="QuantityText" type="Label" parent="CanvasLayer/HBoxContainer/HoeButton"]
+[node name="QuantityText" type="Label" parent="CanvasLayer/ToolButtons/HoeButton"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -275,7 +277,7 @@ label_settings = SubResource("LabelSettings_344ge")
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="WaterButton" type="TextureButton" parent="CanvasLayer/HBoxContainer"]
+[node name="WaterButton" type="TextureButton" parent="CanvasLayer/ToolButtons"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 texture_normal = ExtResource("7_6bp64")
@@ -283,7 +285,7 @@ stretch_mode = 4
 script = ExtResource("8_ynf5e")
 tool = 1
 
-[node name="Icon" type="TextureRect" parent="CanvasLayer/HBoxContainer/WaterButton"]
+[node name="Icon" type="TextureRect" parent="CanvasLayer/ToolButtons/WaterButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -298,7 +300,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("12_344ge")
 
-[node name="QuantityText" type="Label" parent="CanvasLayer/HBoxContainer/WaterButton"]
+[node name="QuantityText" type="Label" parent="CanvasLayer/ToolButtons/WaterButton"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -313,7 +315,7 @@ label_settings = SubResource("LabelSettings_344ge")
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="ScytheButton" type="TextureButton" parent="CanvasLayer/HBoxContainer"]
+[node name="ScytheButton" type="TextureButton" parent="CanvasLayer/ToolButtons"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 texture_normal = ExtResource("7_6bp64")
@@ -321,7 +323,7 @@ stretch_mode = 4
 script = ExtResource("8_ynf5e")
 tool = 2
 
-[node name="Icon" type="TextureRect" parent="CanvasLayer/HBoxContainer/ScytheButton"]
+[node name="Icon" type="TextureRect" parent="CanvasLayer/ToolButtons/ScytheButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -336,7 +338,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("13_344ge")
 
-[node name="QuantityText" type="Label" parent="CanvasLayer/HBoxContainer/ScytheButton"]
+[node name="QuantityText" type="Label" parent="CanvasLayer/ToolButtons/ScytheButton"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -351,7 +353,7 @@ label_settings = SubResource("LabelSettings_344ge")
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="CornSeedButton" type="TextureButton" parent="CanvasLayer/HBoxContainer"]
+[node name="CornSeedButton" type="TextureButton" parent="CanvasLayer/ToolButtons"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 texture_normal = ExtResource("7_6bp64")
@@ -360,7 +362,7 @@ script = ExtResource("8_ynf5e")
 tool = 3
 crop_seed = ExtResource("9_344ge")
 
-[node name="Icon" type="TextureRect" parent="CanvasLayer/HBoxContainer/CornSeedButton"]
+[node name="Icon" type="TextureRect" parent="CanvasLayer/ToolButtons/CornSeedButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -375,7 +377,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("8_344ge")
 
-[node name="QuantityText" type="Label" parent="CanvasLayer/HBoxContainer/CornSeedButton"]
+[node name="QuantityText" type="Label" parent="CanvasLayer/ToolButtons/CornSeedButton"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -391,7 +393,7 @@ label_settings = SubResource("LabelSettings_344ge")
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="TomatoSeedButton" type="TextureButton" parent="CanvasLayer/HBoxContainer"]
+[node name="TomatoSeedButton" type="TextureButton" parent="CanvasLayer/ToolButtons"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 texture_normal = ExtResource("7_6bp64")
@@ -400,7 +402,7 @@ script = ExtResource("8_ynf5e")
 tool = 3
 crop_seed = ExtResource("10_344ge")
 
-[node name="Icon" type="TextureRect" parent="CanvasLayer/HBoxContainer/TomatoSeedButton"]
+[node name="Icon" type="TextureRect" parent="CanvasLayer/ToolButtons/TomatoSeedButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -415,7 +417,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("14_344ge")
 
-[node name="QuantityText" type="Label" parent="CanvasLayer/HBoxContainer/TomatoSeedButton"]
+[node name="QuantityText" type="Label" parent="CanvasLayer/ToolButtons/TomatoSeedButton"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -430,3 +432,8 @@ text = "50"
 label_settings = SubResource("LabelSettings_344ge")
 horizontal_alignment = 1
 vertical_alignment = 2
+
+[node name="DayText" type="Label" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Day 50"
