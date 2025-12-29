@@ -31,3 +31,11 @@ func _animate():
     var anim_name = state + "_" + direction
     if anim.animation != anim_name:
         anim.play(anim_name)
+
+func _process(_delta):
+    # Debug: print current tool occasionally
+    var tools_node = $Tools
+    if tools_node and tools_node.current_tool != null:
+        # Only print occasionally to avoid spam
+        if Engine.get_frames_drawn() % 180 == 0:  # Every 3 seconds at 60fps
+            print("Current tool: ", tools_node.current_tool)

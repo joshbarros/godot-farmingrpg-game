@@ -13,12 +13,29 @@ func _ready():
 func _on_pressed():
     print("Tool button pressed: ", tool)  # Debug print
     # Find the player's tools component to change the selected tool
-    var tools_node = get_node_or_null("/root/Main/Player/Tools")
+    var tools_node = null
+
+    # Try different methods to find the tools node
+    if has_node("/root/Main/Player/Tools"):
+        tools_node = get_node("/root/Main/Player/Tools")
+    else:
+        # Alternative approach: search through the scene tree
+        var main_node = get_tree().root.get_node_or_null("Main")
+        if main_node:
+            var player_node = main_node.get_node_or_null("Player")
+            if player_node:
+                tools_node = player_node.get_node_or_null("Tools")
+
     if tools_node and tools_node is PlayerTools:
         print("Found tools node, setting tool: ", tool)  # Debug print
         tools_node.set_tool(tool, crop_seed)
     else:
         print("Could not find tools node or wrong type")  # Debug print
+        print("Tools node found: ", tools_node)
+        if tools_node:
+            print("Tools node type: ", tools_node.get_class())
+        else:
+            print("Available nodes from root: ", get_tree().root.get_children())
 
 func _on_mouse_entered():
     scale.x = 1.05

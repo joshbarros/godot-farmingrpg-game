@@ -36,6 +36,7 @@ func set_tool(tool_type: Tool, crop_seed: CropData = null):
     current_tool = tool_type
     current_seed = crop_seed
     _cancel_selection()
+    print("Tool set successfully. Current tool: ", current_tool)  # Additional debug
 
 func _get_target_tile_pos() -> Vector2:
     var facing = player.facing_direction.normalized()
