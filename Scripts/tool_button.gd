@@ -9,8 +9,10 @@ extends TextureButton
 func _ready():
     quantity_text.text = ""
     pivot_offset = size / 2
+    # Connect the pressed signal explicitly
+    self.pressed.connect(_on_button_pressed)
 
-func _on_pressed():
+func _on_button_pressed():
     print("Tool button pressed: ", tool)  # Debug print
     # Find the player's tools component to change the selected tool
     var tools_node = null
