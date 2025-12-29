@@ -14,12 +14,15 @@ func _ready():
     quantity_text.text = ""
     pivot_offset = size / 2
     # Connect the pressed signal explicitly
-    GameManager.ChangeSeedQuantity.connect(_on_change_seed_quantity)
+    if GameManager:
+        GameManager.ChangeSeedQuantity.connect(_on_change_seed_quantity)
     self.pressed.connect(_on_button_pressed)
     _update_visual_state()  # Initialize visual state
 
 func _on_pressed():
-    GameManager.SetPlayerTool.emit(tool, crop_seed)
+    # This function is automatically called when the button is pressed
+    # The actual logic is handled in _on_button_pressed() to avoid duplicate calls
+    pass
 
 func set_selected(value: bool):
     is_selected = value

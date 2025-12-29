@@ -30,7 +30,12 @@ func _ready():
         tile_info[cell] = TileInfo.new()
 
 func _on_new_day(day: int):
-    pass
+    for tile_pos in tile_map.get_used_cells():
+        if tile_info[tile_pos].watered:
+            _set_tile_state(tile_pos, TileType.TILLED)
+        elif tile_info[tile_pos].tilled:
+            if tile_info[tile_pos].crop == null:
+                _set_tile_state(tile_pos, TileType.GRASS)
 
 func _on_harvest_crop(crop: Crop):
     # Add harvested crop to player's inventory
