@@ -1,9 +1,10 @@
-[gd_scene load_steps=24 format=4 uid="uid://b24su32e5ewmo"]
+[gd_scene load_steps=25 format=4 uid="uid://b24su32e5ewmo"]
 
 [ext_resource type="TileSet" uid="uid://px1dkgbdsckj" path="res://Sprites/Tiles/farm_tileset.tres" id="1_8gbba"]
 [ext_resource type="Script" uid="uid://b4xcnpogd3c2r" path="res://Scripts/player.gd" id="1_bo1nx"]
 [ext_resource type="Texture2D" uid="uid://c48eybj4dadl0" path="res://Sprites/Player/Player.png" id="1_jjgbg"]
 [ext_resource type="Script" uid="uid://oyn5s53x4mlu" path="res://Scripts/farm_manager.gd" id="1_kry3j"]
+[ext_resource type="Script" uid="uid://dbafmag5j7o46" path="res://Scripts/tools.gd" id="5_6bp64"]
 [ext_resource type="PackedScene" uid="uid://ccc278xtwb7im" path="res://Scenes/crop.tscn" id="5_21xkr"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jjgbg"]
@@ -197,7 +198,11 @@ script = ExtResource("1_bo1nx")
 shape = SubResource("CapsuleShape2D_jjgbg")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+position = Vector2(0, -6.5)
 sprite_frames = SubResource("SpriteFrames_jjgbg")
 animation = &"walk_down"
+
+[node name="Tools" type="Node" parent="Player"]
+script = ExtResource("5_6bp64")
 
 [node name="Crop" parent="." instance=ExtResource("5_21xkr")]
