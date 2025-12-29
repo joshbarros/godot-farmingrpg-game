@@ -1,0 +1,14 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://px1dkgbdsckj"]
+
+[ext_resource type="Texture2D" uid="uid://ds4gixwllw4co" path="res://Sprites/Tiles/Tileset.png" id="1_utept"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_el4tf"]
+texture = ExtResource("1_utept")
+separation = Vector2i(1, 1)
+0:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+
+[resource]
+sources/0 = SubResource("TileSetAtlasSource_el4tf")
