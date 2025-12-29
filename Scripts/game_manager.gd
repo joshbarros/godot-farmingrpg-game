@@ -26,10 +26,18 @@ func harvest_crop(crop : Crop):
 	pass
 
 func try_buy_seed(crop_data: CropData):
-	pass
+	if money < crop_data.seed_price:
+		return
+	
+	money -= crop_data.seed_price
+	owned_seeds[crop_data] += 1
+	ChangeMoney.emit(money)
+	ChangeSeedQuantity.emit(crop_data, owned_seeds[crop_data])
 
 func consume_seed(crop_data : CropData):
-	pass
+	owned_seeds[crop_data] -= 1
+	ChangeSeedQuantity.emit(crop_data, owned_seeds[crop_data])
 
 func give_money(amount : int):
-	pass
+	money += amount
+	ChangeMoney.emit(money)

@@ -5,12 +5,27 @@ extends TextureButton
 @export var crop_seed : CropData
 
 @onready var quantity_text : Label = $QuantityText
+var is_selected = false:
+    set(value):
+        is_selected = value
+        _update_visual_state()
 
 func _ready():
     quantity_text.text = ""
     pivot_offset = size / 2
     # Connect the pressed signal explicitly
     self.pressed.connect(_on_button_pressed)
+    _update_visual_state()  # Initialize visual state
+
+func set_selected(value: bool):
+    is_selected = value
+
+func _update_visual_state():
+    if is_selected:
+        # Add a border or change appearance to indicate selection
+        modulate = Color.YELLOW  # Make the button yellow when selected
+    else:
+        modulate = Color.WHITE  # Normal color when not selected
 
 func _on_button_pressed():
     print("Tool button pressed: ", tool)  # Debug print

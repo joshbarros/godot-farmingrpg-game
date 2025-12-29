@@ -12,6 +12,7 @@ enum Tool {
 var current_tool: Tool
 var current_seed : CropData
 var is_selecting : bool = false
+var previous_selected_button : ToolButton = null  # Track the previously selected button
 
 const TILE_SIZE : int = 16
 
@@ -36,7 +37,46 @@ func set_tool(tool_type: Tool, crop_seed: CropData = null):
     current_tool = tool_type
     current_seed = crop_seed
     _cancel_selection()
+
+    # Update UI to show selected tool
+    _update_tool_ui(tool_type)
+
     print("Tool set successfully. Current tool: ", current_tool)  # Additional debug
+
+func _update_tool_ui(selected_tool: Tool):
+    # Find all tool buttons and update their visual state
+    var canvas_layer = get_tree().root.get_node_or_null("Main/CanvasLayer")
+    if canvas_layer:
+        var hbox_container = canvas_layer.get_node_or_null("HBoxContainer")
+        if hbox_container:
+            # Reset all buttons to normal state
+            for child in hbox_container.get_children():
+                if child.has_method("set_selected") and child is ToolButton:
+                    child.set_selected(false)
+
+            # Highlight the selected tool button
+            var button_name = ""
+            match selected_tool:
+                Tool.HOE:
+                    button_name = "HoeButton"
+                Tool.WATER_BUCKET:
+                    button_name = "WaterButton"
+                Tool.SCYTHE:
+                    button_name = "ScytheButton"
+                Tool.SEED:
+                    # For seed tool, we can't determine which seed button, so highlight both
+                    var corn_button = hbox_container.get_node_or_null("CornSeedButton")
+                    var tomato_button = hbox_container.get_node_or_null("TomatoSeedButton")
+                    if corn_button:
+                        corn_button.set_selected(true)
+                    if tomato_button:
+                        tomato_button.set_selected(true)
+                    return
+
+            # Highlight the specific tool button
+            var button = hbox_container.get_node_or_null(button_name)
+            if button and button is ToolButton:
+                button.set_selected(true)
 
 func _get_target_tile_pos() -> Vector2:
     var facing = player.facing_direction.normalized()
