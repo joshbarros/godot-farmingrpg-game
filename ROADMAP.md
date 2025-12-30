@@ -1,5 +1,11 @@
 # Farming RPG - Development Roadmap
 
+> **Last Updated:** December 29, 2025 at 22:06
+> **Status:** On Hold - Returning in 2027
+> **Progress:** Prototype ~15% complete
+
+---
+
 ## Game Vision: Animal Crossing + Stardew Valley
 
 **The Perfect Blend:**
