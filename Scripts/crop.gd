@@ -21,5 +21,20 @@ func set_crop(data: CropData, already_watered: bool, tile_coords: Vector2i):
     days_until_grown = data.days_to_grow
     sprite.texture = crop_data.growth_sprites[0]
 
-func _on_new_day(day: int):
-    pass
+func _on_new_day(_day: int):
+    if not watered:
+        return
+
+    watered = false
+
+    if days_until_grown > 0:
+        days_until_grown -= 1
+    else:
+        harvestable = true
+
+    var sprite_count : int = len(crop_data.growth_sprites)
+    var growth_percent : float = (crop_data.days_to_grow - days_until_grown) / float(crop_data.days_to_grow)
+    var index : int = floor(growth_percent * sprite_count)
+    index = clamp(index, 0, sprite_count - 1)
+
+    sprite.texture = crop_data.growth_sprites[index]

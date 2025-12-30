@@ -1,7 +1,7 @@
 extends Node
 
 signal NewDay(day : int)
-signal SetPlayerTool(tool : PlayerTools.Tool, seed: CropData)
+signal SetPlayerTool(tool : PlayerTools.Tool, crop_seed: CropData)
 signal HarvestCrop(crop : Crop)
 signal ChangeSeedQuantity(crop_data: CropData, quantity : int)
 signal ChangeMoney(money : int)
@@ -20,6 +20,11 @@ func _ready():
 	for cd in all_crop_data:
 		give_seed.call_deferred(cd, 2)
 	give_money.call_deferred(10)  # Start with some money
+	print("Day ", day, " has started. Press ENTER to advance to the next day.")
+
+func _unhandled_input(event):
+	if event.is_action_pressed("ui_accept"):  # ENTER key
+		set_next_day()
 
 func set_next_day():
 	day += 1

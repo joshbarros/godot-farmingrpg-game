@@ -104,7 +104,8 @@ func _get_tile_center(pos: Vector2) -> Vector2:
 
 func _cancel_selection():
 	is_selecting = false
-	highlight.visible = false
+	if highlight:
+		highlight.visible = false
 
 func _confirm_action():
 	var target_pos = _get_target_tile_pos()

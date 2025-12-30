@@ -29,7 +29,7 @@ func _ready():
     for cell in tile_map.get_used_cells():
         tile_info[cell] = TileInfo.new()
 
-func _on_new_day(day: int):
+func _on_new_day(_day: int):
     for tile_pos in tile_map.get_used_cells():
         if tile_info[tile_pos].watered:
             _set_tile_state(tile_pos, TileType.TILLED)
