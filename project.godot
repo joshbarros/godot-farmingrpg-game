@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Farming RPG"
-run/main_scene="uid://b24su32e5ewmo"
+run/main_scene="uid://buqh1kfcnobjq"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 

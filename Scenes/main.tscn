@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=4 uid="uid://b24su32e5ewmo"]
+[gd_scene load_steps=42 format=4 uid="uid://b24su32e5ewmo"]
 
 [ext_resource type="TileSet" uid="uid://px1dkgbdsckj" path="res://Sprites/Tiles/farm_tileset.tres" id="1_8gbba"]
 [ext_resource type="Script" uid="uid://b4xcnpogd3c2r" path="res://Scripts/player.gd" id="1_bo1nx"]
@@ -16,6 +16,11 @@
 [ext_resource type="Texture2D" uid="uid://b76a5c1simxjk" path="res://Sprites/UI/WaterBucket_Icon.png" id="12_344ge"]
 [ext_resource type="Texture2D" uid="uid://b64hl0ony4d68" path="res://Sprites/UI/Scythe_Icon.png" id="13_344ge"]
 [ext_resource type="Texture2D" uid="uid://cmbasfuts4u8v" path="res://Sprites/UI/TomatoSeed_Icon.png" id="14_344ge"]
+[ext_resource type="Script" uid="uid://bmodv84es216n" path="res://Scripts/buy_seeds_button.gd" id="17_h1bgf"]
+[ext_resource type="AudioStream" uid="uid://tug0r8e0cot7" path="res://Audio/Till.ogg" id="18_audio_till"]
+[ext_resource type="AudioStream" uid="uid://5vn5i1dkxblp" path="res://Audio/Water.ogg" id="19_audio_water"]
+[ext_resource type="AudioStream" uid="uid://dyb1jdutdrafr" path="res://Audio/PlantSeed.ogg" id="20_audio_plant"]
+[ext_resource type="AudioStream" uid="uid://dm7hfh5w1ctrn" path="res://Audio/Harvest.ogg" id="21_audio_harvest"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jjgbg"]
 radius = 6.0
@@ -451,3 +456,271 @@ offset_right = 150.0
 offset_bottom = 85.0
 text = "$ 0"
 label_settings = SubResource("LabelSettings_k12tt")
+
+[node name="BuyCornButton" type="BaseButton" parent="CanvasLayer"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 2
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(120, 60)
+layout_direction = 0
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_left = -130.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 70.0
+grow_horizontal = 0
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 1
+size_flags_vertical = 1
+size_flags_stretch_ratio = 1.0
+localize_numeral_system = true
+tooltip_text = ""
+tooltip_auto_translate_mode = 0
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 2
+focus_behavior_recursive = 0
+mouse_filter = 0
+mouse_behavior_recursive = 0
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 0
+accessibility_name = ""
+accessibility_description = ""
+accessibility_live = 0
+accessibility_controls_nodes = Array[NodePath]([])
+accessibility_described_by_nodes = Array[NodePath]([])
+accessibility_labeled_by_nodes = Array[NodePath]([])
+accessibility_flow_to_nodes = Array[NodePath]([])
+theme = null
+theme_type_variation = &""
+disabled = false
+toggle_mode = false
+button_pressed = false
+action_mode = 1
+button_mask = 1
+keep_pressed_outside = false
+button_group = null
+shortcut = null
+shortcut_feedback = true
+shortcut_in_tooltip = true
+script = ExtResource("17_h1bgf")
+crop_data = ExtResource("9_344ge")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer/BuyCornButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_6bp64")
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+
+[node name="Icon" type="TextureRect" parent="CanvasLayer/BuyCornButton"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 8.0
+offset_top = -15.0
+offset_right = 38.0
+offset_bottom = 15.0
+grow_vertical = 2
+texture = ExtResource("8_344ge")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PriceLabel" type="Label" parent="CanvasLayer/BuyCornButton"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -15.0
+offset_right = -5.0
+offset_bottom = 15.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "$ 10"
+label_settings = SubResource("LabelSettings_344ge")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="BuyTomatoButton" type="BaseButton" parent="CanvasLayer"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 2
+auto_translate_mode = 0
+editor_description = ""
+visible = true
+modulate = Color(1, 1, 1, 1)
+self_modulate = Color(1, 1, 1, 1)
+show_behind_parent = false
+top_level = false
+clip_children = 0
+light_mask = 1
+visibility_layer = 1
+z_index = 0
+z_as_relative = true
+y_sort_enabled = false
+texture_filter = 0
+texture_repeat = 0
+material = null
+use_parent_material = false
+clip_contents = false
+custom_minimum_size = Vector2(120, 60)
+layout_direction = 0
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_left = -130.0
+offset_top = 80.0
+offset_right = -10.0
+offset_bottom = 140.0
+grow_horizontal = 0
+grow_vertical = 1
+rotation = 0.0
+scale = Vector2(1, 1)
+pivot_offset = Vector2(0, 0)
+size_flags_horizontal = 1
+size_flags_vertical = 1
+size_flags_stretch_ratio = 1.0
+localize_numeral_system = true
+tooltip_text = ""
+tooltip_auto_translate_mode = 0
+focus_neighbor_left = NodePath("")
+focus_neighbor_top = NodePath("")
+focus_neighbor_right = NodePath("")
+focus_neighbor_bottom = NodePath("")
+focus_next = NodePath("")
+focus_previous = NodePath("")
+focus_mode = 2
+focus_behavior_recursive = 0
+mouse_filter = 0
+mouse_behavior_recursive = 0
+mouse_force_pass_scroll_events = true
+mouse_default_cursor_shape = 0
+accessibility_name = ""
+accessibility_description = ""
+accessibility_live = 0
+accessibility_controls_nodes = Array[NodePath]([])
+accessibility_described_by_nodes = Array[NodePath]([])
+accessibility_labeled_by_nodes = Array[NodePath]([])
+accessibility_flow_to_nodes = Array[NodePath]([])
+theme = null
+theme_type_variation = &""
+disabled = false
+toggle_mode = false
+button_pressed = false
+action_mode = 1
+button_mask = 1
+keep_pressed_outside = false
+button_group = null
+shortcut = null
+shortcut_feedback = true
+shortcut_in_tooltip = true
+script = ExtResource("17_h1bgf")
+crop_data = ExtResource("10_344ge")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer/BuyTomatoButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_6bp64")
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+
+[node name="Icon" type="TextureRect" parent="CanvasLayer/BuyTomatoButton"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 8.0
+offset_top = -15.0
+offset_right = 38.0
+offset_bottom = 15.0
+grow_vertical = 2
+texture = ExtResource("14_344ge")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PriceLabel" type="Label" parent="CanvasLayer/BuyTomatoButton"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -15.0
+offset_right = -5.0
+offset_bottom = 15.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "$ 10"
+label_settings = SubResource("LabelSettings_344ge")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TillSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("18_audio_till")
+
+[node name="WaterSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("19_audio_water")
+
+[node name="PlantSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("20_audio_plant")
+
+[node name="HarvestSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("21_audio_harvest")

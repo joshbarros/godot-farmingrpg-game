@@ -13,6 +13,11 @@ class TileInfo:
     var crop : Crop
 
 @onready var tile_map : TileMapLayer = $FarmTileMap
+@onready var till_sound : AudioStreamPlayer = get_parent().get_node("TillSound")
+@onready var water_sound : AudioStreamPlayer = get_parent().get_node("WaterSound")
+@onready var plant_sound : AudioStreamPlayer = get_parent().get_node("PlantSound")
+@onready var harvest_sound : AudioStreamPlayer = get_parent().get_node("HarvestSound")
+
 var tile_info : Dictionary[Vector2i, TileInfo]
 var crop_scene : PackedScene = preload("res://Scenes/crop.tscn")
 
@@ -58,6 +63,8 @@ func try_till_tile(player_pos: Vector2):
         return
 
     _set_tile_state(coords, TileType.TILLED)
+    if till_sound:
+        till_sound.play()
 
 func try_water_tile(player_pos: Vector2):
     var local_pos = tile_map.to_local(player_pos)
@@ -70,6 +77,11 @@ func try_water_tile(player_pos: Vector2):
         return
 
     _set_tile_state(coords, TileType.TILLED_WATERED)
+    # Also update the crop's watered state if there's a crop on this tile
+    if tile_info[coords].crop:
+        tile_info[coords].crop.watered = true
+    if water_sound:
+        water_sound.play()
 
 func try_seed_tile(player_pos: Vector2, crop_data: CropData):
     var local_pos = tile_map.to_local(player_pos)
@@ -98,6 +110,8 @@ func try_seed_tile(player_pos: Vector2, crop_data: CropData):
     add_child(crop_instance)
     crop_instance.set_crop(crop_data, tile_info[coords].watered, coords)
     tile_info[coords].crop = crop_instance
+    if plant_sound:
+        plant_sound.play()
 
 func try_harvest_tile(player_pos: Vector2):
     var local_pos = tile_map.to_local(player_pos)
@@ -112,6 +126,8 @@ func try_harvest_tile(player_pos: Vector2):
     _on_harvest_crop(tile_info[coords].crop)
     tile_info[coords].crop.queue_free()
     tile_info[coords].crop = null
+    if harvest_sound:
+        harvest_sound.play()
 
 func is_tile_watered(pos: Vector2i) -> bool:
     var coords : Vector2i = tile_map.local_to_map(pos)

@@ -10,7 +10,8 @@ var tile_map_coords : Vector2i
 @onready var sprite : Sprite2D = $Sprite
 
 func _ready():
-    pass
+    if GameManager:
+        GameManager.NewDay.connect(_on_new_day)
 
 func set_crop(data: CropData, already_watered: bool, tile_coords: Vector2i):
     crop_data = data
