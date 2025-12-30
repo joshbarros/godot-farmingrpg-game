@@ -1,25 +1,61 @@
+## PlayerTools - Tool Selection and Action System
+##
+## This script handles the player's tool system including selection, targeting,
+## and action execution. It provides a two-step interaction system where players
+## first highlight a tile (E key), then confirm the action (E again).
+##
+## Tool Types:
+##   - HOE: Tills grass into farmable soil
+##   - WATER_BUCKET: Waters tilled soil for crop growth
+##   - SCYTHE: Harvests fully grown crops
+##   - SEED: Plants seeds on tilled soil (requires selecting specific seed type)
+##
+## Controls:
+##   - Click tool buttons in UI to select tools
+##   - E: Highlight target tile / Confirm action
+##   - F: Cancel current selection
+##
+## Auto-Switching:
+##   - After using HOE, automatically switches to WATER_BUCKET
+##   - After using WATER_BUCKET, automatically switches back to HOE
 class_name PlayerTools
 
 extends Node
 
+## Available tool types the player can use.
 enum Tool {
-	HOE,
-	WATER_BUCKET,
-	SCYTHE,
-	SEED
+	HOE,          ## Tills grass into farmable soil
+	WATER_BUCKET, ## Waters tilled/planted tiles
+	SCYTHE,       ## Harvests mature crops
+	SEED          ## Plants seeds (requires crop_seed to be set)
 }
 
+## The currently selected tool.
 var current_tool: Tool
-var current_seed : CropData
-var is_selecting : bool = false
-var previous_selected_button : ToolButton = null  # Track the previously selected button
 
+## The seed type to plant when using SEED tool. Null for other tools.
+var current_seed : CropData
+
+## Whether the player is currently in selection mode (highlighting a tile).
+var is_selecting : bool = false
+
+## Reference to the previously selected tool button for UI state tracking.
+var previous_selected_button : ToolButton = null
+
+## Size of one tile in pixels. Used for positioning highlight and calculating targets.
 const TILE_SIZE : int = 16
 
+## Reference to the parent player node for position and facing direction.
 @onready var player : CharacterBody2D = get_parent()
+
+## Reference to the FarmManager for executing farming actions.
 @onready var farm_manager : FarmManager = get_node("/root/Main/FarmManager")
+
+## Visual indicator showing which tile the player is targeting.
 var highlight : ColorRect
 
+
+## Initializes the tool system and sets default tool to HOE.
 func _ready():
 	# Connect to the GameManager for tool selection
 	if GameManager:
@@ -32,6 +68,9 @@ func _ready():
 		print("Warning: GameManager not found, using fallback tool selection")
 	_create_highlight()
 
+
+## Creates the yellow highlight rectangle for tile selection.
+## Added to the scene root for proper positioning.
 func _create_highlight():
 	highlight = ColorRect.new()
 	highlight.size = Vector2(TILE_SIZE, TILE_SIZE)
@@ -40,6 +79,11 @@ func _create_highlight():
 	highlight.z_index = 10
 	get_tree().root.call_deferred("add_child", highlight)
 
+
+## Changes the current tool and updates UI state.
+## Called when player clicks a tool button or via GameManager signal.
+## @param tool_type: The Tool enum value to switch to.
+## @param crop_seed: The CropData for SEED tool, or null for other tools.
 func set_tool(tool_type: Tool, crop_seed: CropData = null):
 	print("Setting tool to: ", tool_type, " with seed: ", crop_seed)  # Debug print
 	current_tool = tool_type
@@ -51,6 +95,10 @@ func set_tool(tool_type: Tool, crop_seed: CropData = null):
 
 	print("Tool set successfully. Current tool: ", current_tool)  # Additional debug
 
+
+## Updates the visual state of tool buttons to show which is selected.
+## Finds buttons by name and calls set_selected() on matching button.
+## @param selected_tool: The currently selected Tool enum value.
 func _update_tool_ui(selected_tool: Tool):
 	# Find all tool buttons and update their visual state
 	var canvas_layer = get_tree().root.get_node_or_null("Main/CanvasLayer")
@@ -87,6 +135,10 @@ func _update_tool_ui(selected_tool: Tool):
 			if button and button is ToolButton:
 				button.set_selected(true)
 
+
+## Calculates the world position of the tile in front of the player.
+## Uses the player's facing direction snapped to cardinal directions.
+## @return: World position of the target tile center.
 func _get_target_tile_pos() -> Vector2:
 	var facing = player.facing_direction.normalized()
 	# Snap to cardinal direction
@@ -96,17 +148,28 @@ func _get_target_tile_pos() -> Vector2:
 		facing = Vector2(0, sign(facing.y))
 	return player.global_position + facing * TILE_SIZE
 
+
+## Converts a world position to the center of its containing tile.
+## Used for accurate highlight positioning.
+## @param pos: World position to convert.
+## @return: World position of the tile's center.
 func _get_tile_center(pos: Vector2) -> Vector2:
 	var tile_map = farm_manager.tile_map
 	var local_pos = tile_map.to_local(pos)
 	var coords = tile_map.local_to_map(local_pos)
 	return tile_map.to_global(tile_map.map_to_local(coords))
 
+
+## Cancels the current tile selection and hides the highlight.
 func _cancel_selection():
 	is_selecting = false
 	if highlight:
 		highlight.visible = false
 
+
+## Executes the current tool's action on the targeted tile.
+## Calls the appropriate FarmManager method based on current_tool.
+## Auto-switches between HOE and WATER_BUCKET after use.
 func _confirm_action():
 	var target_pos = _get_target_tile_pos()
 	match current_tool:
@@ -122,6 +185,10 @@ func _confirm_action():
 			farm_manager.try_seed_tile(target_pos, current_seed)
 	_cancel_selection()
 
+
+## Called every frame. Updates highlight position and handles input.
+## E key toggles between selection mode and action confirmation.
+## F key cancels current selection.
 func _process(_delta):
 	# Update highlight position when selecting
 	if is_selecting:
